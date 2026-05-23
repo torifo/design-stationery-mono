@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLANK STORE — 余白と道具</title>
+  <meta name="description" content="学生のための、最小限の文房具。ノート、ペン、定規。BLANK STORE は迷わず使える道具だけを扱う、白と黒と一色の店。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :where(html,body){line-break:strict;word-break:normal;overflow-wrap:break-word;hanging-punctuation:allow-end}
+    :where(h1,h2,h3,h4,p,li,dt,dd,a,span,small,strong,em,button){line-break:strict;word-break:auto-phrase;overflow-wrap:break-word}
+    :where(h1,h2,h3,h4,[class*=title]){text-wrap:balance}
+    :where(p,li,dd){text-wrap:pretty}
+    :root{
+      --bg:#ffffff;
+      --fg:#0a0a0a;
+      --muted:#6a6a6a;
+      --line:#dcdcdc;
+      --hi:#eaff00;  /* ビビッド黄 */
+      --hi-soft:#fffbd1;
+      --font:'DM Sans','Noto Sans JP',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);
+      color:var(--fg);
+      font-family:var(--font);
+      font-weight:400;
+      line-height:1.6;
+      letter-spacing:.01em;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+    /* ─── ヘッダー ─── */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:var(--bg);
+      border-bottom:1px solid var(--fg);
+      padding:1rem clamp(1.2rem,4vw,3rem);
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    }
+    .brand{
+      font-weight:700;
+      font-size:1.15rem;
+      letter-spacing:.18em;
+      display:flex;align-items:center;gap:.6rem;
+    }
+    .brand::before{
+      content:"";
+      display:inline-block;
+      width:1rem;height:1rem;
+      background:var(--fg);
+    }
+    nav ul{list-style:none;display:flex;gap:clamp(1rem,2.5vw,2rem);font-size:.85rem;font-weight:500;letter-spacing:.12em}
+    nav a{position:relative;padding-bottom:.2em}
+    nav a::after{
+      content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+      background:var(--hi);transform:scaleX(0);transform-origin:right;transition:transform .3s;
+    }
+    nav a:hover::after{transform:scaleX(1);transform-origin:left}
+
+    /* ─── ヒーロー ─── */
+    .hero{
+      padding:clamp(5rem,12vw,10rem) clamp(1.2rem,4vw,3rem) clamp(3rem,7vw,6rem);
+      max-width:1200px;margin:0 auto;
+      display:grid;grid-template-columns:1fr;gap:clamp(2rem,5vw,4rem);
+    }
+    @media(min-width:780px){.hero{grid-template-columns:1.3fr .7fr;align-items:end}}
+    .hero h1{
+      font-weight:700;
+      font-size:clamp(3rem,9vw,7rem);
+      line-height:.95;
+      letter-spacing:-.02em;
+    }
+    .hero h1 .hi{
+      background:linear-gradient(transparent 65%,var(--hi) 65%);
+      padding:0 .05em;
+    }
+    .hero p{
+      font-size:clamp(1rem,1.3vw,1.1rem);
+      margin-top:1.5rem;
+      color:var(--muted);
+      max-width:36em;
+    }
+    .hero-meta{
+      font-size:.78rem;
+      letter-spacing:.15em;
+      font-weight:500;
+      text-transform:uppercase;
+      display:flex;flex-direction:column;gap:1rem;
+      align-self:end;
+    }
+    .hero-meta span{display:block;color:var(--muted)}
+    .hero-meta strong{display:block;font-weight:700;color:var(--fg);margin-top:.3em;font-size:1rem;letter-spacing:.08em;text-transform:none}
+
+    /* ─── セクション共通 ─── */
+    section{padding:clamp(3rem,6vw,5rem) clamp(1.2rem,4vw,3rem);max-width:1200px;margin:0 auto}
+    .shou{
+      display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+      padding-bottom:1.2rem;border-bottom:1px solid var(--fg);
+      margin-bottom:2.5rem;
+    }
+    .shou h2{
+      font-size:clamp(1.4rem,2.2vw,1.8rem);
+      font-weight:700;
+      letter-spacing:.04em;
+    }
+    .shou .no{
+      font-size:.78rem;
+      letter-spacing:.3em;
+      font-weight:500;
+      color:var(--muted);
+    }
+
+    /* ─── 商品 ─── */
+    .items{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr));
+      gap:clamp(1.5rem,2.5vw,2rem);
+    }
+    .item{
+      display:flex;flex-direction:column;
+      transition:transform .25s ease;
+    }
+    .item:hover{transform:translateY(-4px)}
+    .item-img{
+      aspect-ratio:4/5;
+      background:#f4f4f4;
+      border:1px solid var(--line);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;
+    }
+    .item-img svg{width:55%;height:auto}
+    .item:hover .item-img{border-color:var(--fg)}
+    .item-cat{
+      position:absolute;top:.6rem;left:.6rem;
+      font-size:.65rem;letter-spacing:.2em;
+      font-weight:500;
+      padding:.2em .6em;
+      background:var(--fg);color:var(--bg);
+    }
+    .item-cap{padding:1rem 0 0;display:flex;justify-content:space-between;gap:1rem;align-items:start}
+    .item h3{
+      font-size:.95rem;
+      font-weight:500;
+      letter-spacing:.02em;
+      line-height:1.4;
+    }
+    .item h3 small{
+      display:block;font-size:.7rem;letter-spacing:.15em;
+      color:var(--muted);font-weight:400;margin-top:.3em;text-transform:uppercase;
+    }
+    .price{
+      font-weight:700;
+      font-size:.95rem;
+      white-space:nowrap;
+    }
+    .price small{font-size:.7em;color:var(--muted);font-weight:400;margin-right:.1em}
+
+    /* ─── カテゴリ ─── */
+    .cats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));
+      gap:1px;
+      background:var(--fg);
+      border:1px solid var(--fg);
+    }
+    .cat{
+      background:var(--bg);
+      padding:clamp(1.5rem,2.5vw,2.2rem);
+      transition:background .25s;
+      display:flex;flex-direction:column;gap:.5rem;
+    }
+    .cat:hover{background:var(--hi)}
+    .cat-no{font-size:.7rem;letter-spacing:.3em;font-weight:500;color:var(--muted)}
+    .cat:hover .cat-no{color:var(--fg)}
+    .cat h3{
+      font-size:1.1rem;font-weight:700;letter-spacing:.04em;
+    }
+    .cat p{font-size:.8rem;color:var(--muted);line-height:1.55}
+    .cat:hover p{color:var(--fg)}
+
+    /* ─── 店主の一言 ─── */
+    .voice{
+      padding:clamp(4rem,7vw,6rem) clamp(1.2rem,4vw,3rem);
+      max-width:780px;margin:0 auto;
+      text-align:center;
+    }
+    .voice blockquote{
+      font-size:clamp(1.4rem,3vw,2.2rem);
+      font-weight:500;
+      line-height:1.45;
+      letter-spacing:-.005em;
+    }
+    .voice blockquote .hi{
+      background:linear-gradient(transparent 60%,var(--hi) 60%);
+      padding:0 .1em;
+    }
+    .voice cite{
+      display:block;
+      font-style:normal;
+      font-size:.78rem;
+      letter-spacing:.3em;
+      color:var(--muted);
+      margin-top:2rem;
+    }
+
+    /* ─── 店の情報 ─── */
+    .info{
+      border-top:1px solid var(--fg);border-bottom:1px solid var(--fg);
+      padding:clamp(3rem,5vw,4rem) clamp(1.2rem,4vw,3rem);
+      max-width:none;
+    }
+    .info-grid{
+      max-width:1200px;margin:0 auto;
+      display:grid;grid-template-columns:1fr;gap:2rem;
+    }
+    @media(min-width:780px){.info-grid{grid-template-columns:auto 1fr auto}}
+    .info h3{
+      font-size:1.4rem;font-weight:700;letter-spacing:.08em;
+    }
+    .info dl{
+      display:grid;grid-template-columns:auto 1fr;gap:.6rem 2rem;
+      font-size:.88rem;
+    }
+    .info dt{color:var(--muted);font-weight:500;letter-spacing:.15em;font-size:.75rem;text-transform:uppercase}
+    .info dd{font-weight:500}
+    .info .sns{
+      display:flex;flex-wrap:wrap;gap:.5rem;
+      align-self:start;
+    }
+    .info .sns span{
+      font-size:.72rem;letter-spacing:.15em;
+      padding:.4em .9em;
+      border:1px solid var(--fg);
+    }
+
+    /* ─── フッター ─── */
+    footer{
+      padding:2.5rem clamp(1.2rem,4vw,3rem) 1.5rem;
+      display:flex;flex-wrap:wrap;gap:1rem;
+      justify-content:space-between;align-items:center;
+      font-size:.72rem;letter-spacing:.2em;color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="../">BLANK STORE</a>
+  <nav>
+    <ul>
+      <li><a href="#items">商品</a></li>
+      <li><a href="#cats">カテゴリ</a></li>
+      <li><a href="#info">店</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div>
+      <h1>道具に、<br>余白を。<span class="hi">迷わず使える</span>文房具だけ。</h1>
+      <p>BLANK STORE は、学生のための最小限の文房具店です。装飾はゼロ。書きやすさと整い方だけで選びました。ノート、ペン、定規、消しゴム。それで足ります。</p>
+    </div>
+    <div class="hero-meta">
+      <span>STORE / <strong>OPEN</strong></span>
+      <span>SINCE / <strong>2024</strong></span>
+      <span>TYPE / <strong>STUDENT STATIONERY</strong></span>
+    </div>
+  </section>
+
+  <section id="items">
+    <div class="shou">
+      <h2>定番の道具</h2>
+      <span class="no">— SELECTED ITEMS</span>
+    </div>
+    <div class="items">
+      <article class="item">
+        <div class="item-img">
+          <span class="item-cat">NOTE</span>
+          <svg viewBox="0 0 100 130" aria-hidden="true">
+            <rect x="20" y="15" width="60" height="100" fill="#fff" stroke="#0a0a0a" stroke-width="1.5"/>
+            <line x1="30" y1="30" x2="70" y2="30" stroke="#0a0a0a" stroke-width=".5"/>
+            <line x1="30" y1="40" x2="70" y2="40" stroke="#0a0a0a" stroke-width=".5"/>
+            <line x1="30" y1="50" x2="60" y2="50" stroke="#0a0a0a" stroke-width=".5"/>
+            <line x1="30" y1="60" x2="70" y2="60" stroke="#0a0a0a" stroke-width=".5"/>
+            <line x1="30" y1="70" x2="55" y2="70" stroke="#0a0a0a" stroke-width=".5"/>
+          </svg>
+        </div>
+        <div class="item-cap">
+          <h3>A5 罫線ノート<small>RULED A5</small></h3>
+          <span class="price"><small>¥</small>320</span>
+        </div>
+      </article>
+      <article class="item">
+        <div class="item-img">
+          <span class="item-cat">PEN</span>
+          <svg viewBox="0 0 100 130" aria-hidden="true">
+            <rect x="42" y="20" width="16" height="80" fill="#0a0a0a"/>
+            <polygon points="42,100 58,100 50,115" fill="#0a0a0a"/>
+            <rect x="42" y="25" width="16" height="3" fill="#fff"/>
+            <rect x="40" y="35" width="20" height="6" fill="#eaff00"/>
+          </svg>
+        </div>
+        <div class="item-cap">
+          <h3>0.5 黒ボールペン<small>BLACK 0.5</small></h3>
+          <span class="price"><small>¥</small>180</span>
+        </div>
+      </article>
+      <article class="item">
+        <div class="item-img">
+          <span class="item-cat">RULER</span>
+          <svg viewBox="0 0 100 130" aria-hidden="true">
+            <rect x="20" y="55" width="60" height="14" fill="#fff" stroke="#0a0a0a" stroke-width="1.5"/>
+            <g stroke="#0a0a0a" stroke-width=".8">
+              <line x1="26" y1="55" x2="26" y2="62"/>
+              <line x1="32" y1="55" x2="32" y2="60"/>
+              <line x1="38" y1="55" x2="38" y2="60"/>
+              <line x1="44" y1="55" x2="44" y2="60"/>
+              <line x1="50" y1="55" x2="50" y2="63"/>
+              <line x1="56" y1="55" x2="56" y2="60"/>
+              <line x1="62" y1="55" x2="62" y2="60"/>
+              <line x1="68" y1="55" x2="68" y2="60"/>
+              <line x1="74" y1="55" x2="74" y2="62"/>
+            </g>
+          </svg>
+        </div>
+        <div class="item-cap">
+          <h3>15cm 直定規<small>STRAIGHT RULER</small></h3>
+          <span class="price"><small>¥</small>240</span>
+        </div>
+      </article>
+      <article class="item">
+        <div class="item-img">
+          <span class="item-cat">ERASER</span>
+          <svg viewBox="0 0 100 130" aria-hidden="true">
+            <rect x="28" y="50" width="44" height="28" fill="#fff" stroke="#0a0a0a" stroke-width="1.5"/>
+            <rect x="28" y="50" width="44" height="6" fill="#eaff00"/>
+            <text x="50" y="71" text-anchor="middle" font-family="DM Sans" font-size="7" font-weight="700" fill="#0a0a0a" letter-spacing="1.5">MONO</text>
+          </svg>
+        </div>
+        <div class="item-cap">
+          <h3>消しゴム<small>ERASER</small></h3>
+          <span class="price"><small>¥</small>120</span>
+        </div>
+      </article>
+      <article class="item">
+        <div class="item-img">
+          <span class="item-cat">MARKER</span>
+          <svg viewBox="0 0 100 130" aria-hidden="true">
+            <rect x="38" y="20" width="24" height="80" fill="#eaff00" stroke="#0a0a0a" stroke-width="1.5"/>
+            <rect x="38" y="20" width="24" height="12" fill="#0a0a0a"/>
+            <polygon points="38,100 62,100 50,118" fill="#0a0a0a"/>
+          </svg>
+        </div>
+        <div class="item-cap">
+          <h3>蛍光マーカー 黄<small>HIGHLIGHTER</small></h3>
+          <span class="price"><small>¥</small>150</span>
+        </div>
+      </article>
+      <article class="item">
+        <div class="item-img">
+          <span class="item-cat">CLIP</span>
+          <svg viewBox="0 0 100 130" aria-hidden="true">
+            <rect x="34" y="40" width="32" height="48" fill="none" stroke="#0a0a0a" stroke-width="1.5"/>
+            <line x1="38" y1="40" x2="38" y2="88" stroke="#0a0a0a" stroke-width="1.5"/>
+            <line x1="34" y1="50" x2="66" y2="50" stroke="#0a0a0a" stroke-width="1.5"/>
+            <rect x="44" y="32" width="12" height="12" fill="#0a0a0a"/>
+          </svg>
+        </div>
+        <div class="item-cap">
+          <h3>クリップ式バインダー<small>CLIP BINDER</small></h3>
+          <span class="price"><small>¥</small>480</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="cats">
+    <div class="shou">
+      <h2>カテゴリで探す</h2>
+      <span class="no">— BROWSE</span>
+    </div>
+    <div class="cats">
+      <a class="cat" href="#">
+        <span class="cat-no">01</span>
+        <h3>書く</h3>
+        <p>ボールペン、シャープペン、万年筆。書き心地で選んだ品。</p>
+      </a>
+      <a class="cat" href="#">
+        <span class="cat-no">02</span>
+        <h3>記す</h3>
+        <p>ノート、メモ、ルーズリーフ。用途別に揃えています。</p>
+      </a>
+      <a class="cat" href="#">
+        <span class="cat-no">03</span>
+        <h3>整える</h3>
+        <p>クリップ、ファイル、定規。机の上を片付ける道具。</p>
+      </a>
+      <a class="cat" href="#">
+        <span class="cat-no">04</span>
+        <h3>消す・直す</h3>
+        <p>消しゴム、修正テープ、シャープペン替芯。</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="voice">
+    <blockquote>
+      最小限のもので、<span class="hi">最大限の集中</span>を。<br>
+      飾るのは、机ではなく中身。
+    </blockquote>
+    <cite>— 店主</cite>
+  </section>
+
+</main>
+
+<section class="info" id="info">
+  <div class="info-grid">
+    <h3>BLANK STORE</h3>
+    <dl>
+      <dt>営業</dt><dd>月〜土 11:00 – 20:00 / 日休</dd>
+      <dt>住所</dt><dd>東京都目黒区中目黒 2-3-4 / 1F</dd>
+      <dt>電話</dt><dd>03-xxxx-xxxx</dd>
+    </dl>
+    <div class="sns">
+      <span>Instagram</span>
+      <span>Online Shop</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 BLANK STORE</span>
+  <span>架空店舗 / FOR DESIGN STUDY</span>
+</footer>
+
+</body>
+</html>
